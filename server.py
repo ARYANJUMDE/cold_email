@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from agents import run_researcher, run_persona_definer, run_email_writer
 from judge import run_judge
 from flask_cors import CORS
@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route("/")
 def home():
-    return "API is running!"
+    return send_file("public/index.html")
 
 @app.route("/generate", methods=["POST"])
 def generate():
