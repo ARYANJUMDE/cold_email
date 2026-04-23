@@ -1,15 +1,10 @@
-import os
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 from agents import run_researcher, run_persona_definer, run_email_writer
 from judge import run_judge
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-
-@app.route("/")
-def home():
-    return send_file("public/index.html")
 
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -30,5 +25,4 @@ def generate():
         "judge": judge
     })
 
-# IMPORTANT for Vercel
 app = app
