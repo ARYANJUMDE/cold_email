@@ -1,2 +1,4 @@
 from server import app
-app = app
+
+def handler(request):
+    return app(request)
