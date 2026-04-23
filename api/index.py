@@ -6,10 +6,7 @@ from api.judge import run_judge
 app = Flask(__name__)
 CORS(app) # Enable CORS for all routes
 
-# Home route (to avoid 404)
-@app.route("/")
-def home():
-    return "API is running"
+# Home route removed to prevent static file conflicts
 
 # Main API route
 @app.route("/api/generate", methods=["POST"])
