@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from api.agents import run_researcher, run_persona_definer, run_email_writer
 from api.judge import run_judge
 
 app = Flask(__name__)
+CORS(app) # Enable CORS for all routes
 
 # Home route (to avoid 404)
 @app.route("/")
@@ -18,9 +20,9 @@ def generate():
     product = data.get("product")
 
     pain = run_researcher(industry, product)
-    persona = run_persona_definer(industry, product)
-    email = run_email_writer(pain, persona)
-    result = run_judge(email)
+    persona = run_persona_definer(industry, product, pain)
+    email = run_email_writer(industry, product, pain, persona)
+    result = run_judge(industry, product, pain, persona, email)
 
     return jsonify({
         "pain": pain,
