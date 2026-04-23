@@ -50,17 +50,54 @@ def run_persona_definer(industry, product, pain_points, log_step=None):
 
 def run_email_writer(industry, product, pain_points, persona, log_step=None):
     if log_step:
-        log_step("[Email] Generating sequence")
+        log_step("[Email] Generating sequence (rule-based)")
+
+    email_1 = {
+        "subject": "Quick idea for your team",
+        "body": f"""
+Hi,
+
+I noticed that many companies in {industry} struggle with:
+{pain_points}
+
+Our {product} helps solve these challenges efficiently.
+
+Thought this might be relevant — does this resonate with you?
+""",
+        "cta": "Does this resonate?"
+    }
+
+    email_2 = {
+        "subject": "Helping teams like yours",
+        "body": f"""
+Hi again,
+
+A lot of teams in {industry} face issues like:
+{pain_points}
+
+We’ve helped businesses improve results using {product}.
+
+Happy to share how this works if you're interested.
+""",
+        "cta": "Want to see how it works?"
+    }
+
+    email_3 = {
+        "subject": "Final follow-up",
+        "body": """
+Hi,
+
+Just checking in one last time.
+
+Would love to connect and see if this can help your team.
+
+No worries if not 🙂
+""",
+        "cta": "Can we schedule a quick 10-min call?"
+    }
 
     return {
-        "email_1": {
-            "subject": "Quick idea for your team",
-            "body": f"Problems:\n{pain_points}\n\nOur {product} helps solve this.",
-            "cta": "Does this resonate?"
-        },
-        "email_2": {
-            "subject": "Helping teams like yours",
-            "body": f"Teams in {industry} struggle with:\n{pain_points}",
-            "cta": "Want to see how?"
-        }
+        "email_1": email_1,
+        "email_2": email_2,
+        "email_3": email_3
     }

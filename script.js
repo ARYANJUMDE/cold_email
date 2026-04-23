@@ -76,6 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('email2Body').textContent = email2.body || '';
         document.getElementById('email2Cta').textContent = email2.cta || '';
 
+        const email3 = data.email?.email_3 || {};
+        const email3SubjectEl = document.getElementById('email3Subject');
+        if(email3SubjectEl) {
+            email3SubjectEl.textContent = email3.subject || '';
+            document.getElementById('email3Body').textContent = email3.body || '';
+            document.getElementById('email3Cta').textContent = email3.cta || '';
+        }
+
         // Render Judge
         const judge = data.judge || {};
         const score = judge.overall_score || '?';
