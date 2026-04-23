@@ -1,0 +1,123 @@
+# agents.py
+def run_researcher(industry: str, product: str, log_step=None) -> str:
+    if log_step:
+        log_step("[Researcher] Running (rule-based)")
+
+    # Predefined industry pain points
+    pain_points_data = {
+        "SaaS": [
+            "High customer churn due to poor retention strategies",
+            "Expensive customer acquisition costs (CAC)",
+            "Difficulty scaling operations efficiently"
+        ],
+        "HR Tech": [
+            "Slow and inefficient hiring processes",
+            "Poor employee onboarding experience",
+            "Manual HR workflows causing delays"
+        ],
+        "Ecommerce": [
+            "High cart abandonment rates",
+            "Low conversion rates on product pages",
+            "Difficulty retaining customers"
+        ]
+    }
+
+    points = pain_points_data.get(
+        industry,
+        ["General inefficiency", "Low productivity", "Growth challenges"]
+    )
+
+    # Format nicely
+    result = "### Key Pain Points:\n"
+    for i, p in enumerate(points, 1):
+        result += f"{i}. {p}\n"
+
+    return result
+
+
+# ─────────────────────────────────────────────────────────────
+
+def run_persona_definer(industry, product, pain_points, log_step=None):
+    if log_step:
+        log_step("[Persona] Running (rule-based)")
+
+    return f"""
+### Target Persona
+
+- **Job Role:** Manager / Decision Maker in {industry}
+- **Responsibilities:** Improve performance, solve operational problems
+- **Pain Points:** {pain_points}
+- **Goal:** Use {product} to improve results
+- **Behavior:** Interested in practical solutions that save time and cost
+"""
+
+
+# ─────────────────────────────────────────────────────────────
+
+def run_email_writer(industry, product, pain_points, persona, log_step=None):
+    if log_step:
+        log_step("[Email] Generating sequence (rule-based)")
+
+    email_1 = {
+        "subject": "Quick idea for your team",
+        "body": f"""
+Hi,
+
+I noticed that many companies in {industry} struggle with:
+{pain_points}
+
+Our {product} helps solve these challenges efficiently.
+
+Thought this might be relevant — does this resonate with you?
+""",
+        "cta": "Does this resonate?"
+    }
+
+    email_2 = {
+        "subject": "Helping teams like yours",
+        "body": f"""
+Hi again,
+
+A lot of teams in {industry} face issues like:
+{pain_points}
+
+We’ve helped businesses improve results using {product}.
+
+Happy to share how this works if you're interested.
+""",
+        "cta": "Want to see how it works?"
+    }
+
+    email_3 = {
+        "subject": "Final follow-up",
+        "body": """
+Hi,
+
+Just checking in one last time.
+
+Would love to connect and see if this can help your team.
+
+No worries if not 🙂
+""",
+        "cta": "Can we schedule a quick 10-min call?"
+    }
+
+    return {
+        "email_1": email_1,
+        "email_2": email_2,
+        "email_3": email_3
+    }
+
+
+# ─────────────────────────────────────────────────────────────
+
+def run_full_pipeline(industry, product, log_step=print):
+    pain_points = run_researcher(industry, product, log_step)
+    persona = run_persona_definer(industry, product, pain_points, log_step)
+    emails = run_email_writer(industry, product, pain_points, persona, log_step)
+
+    return {
+        "pain_points": pain_points,
+        "persona": persona,
+        "emails": emails,
+    }
